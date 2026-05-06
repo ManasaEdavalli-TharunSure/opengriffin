@@ -1,0 +1,35 @@
+{
+  "ran_at": "2026-05-06T13:51:38.252517",
+  "tasks": [
+    {
+      "id": "readme",
+      "title": "Draft OpenGriffin README.md",
+      "out": "README.md",
+      "chars": 12422,
+      "started": "2026-05-06T13:48:07.333246",
+      "finished": "2026-05-06T13:49:33.026319",
+      "duration_sec": 85.7,
+      "status": "done"
+    },
+    {
+      "id": "dashboard",
+      "title": "Build skill graph dashboard module",
+      "out": "src/opengriffin/dashboard/server.py",
+      "chars": 20543,
+      "started": "2026-05-06T13:49:33.026645",
+      "finished": "2026-05-06T13:51:01.003837",
+      "duration_sec": 88.0,
+      "status": "done"
+    },
+    {
+      "id": "journey",
+      "title": "Write JOURNEY.md narrating the dogfood build",
+      "out": "JOURNEY.md",
+      "chars": 3586,
+      "started": "2026-05-06T13:51:01.004327",
+      "finished": "2026-05-06T13:51:38.252109",
+      "duration_sec": 37.2,
+      "status": "done"
+    }
+  ]
+}

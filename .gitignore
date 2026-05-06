@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtualenvs
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Persistent state (per-deployment)
+sessions.json
+kanban.json
+aliases.json
+usage.jsonl
+webhooks.json
+checkpoints/
+memories/MEMORY.md
+memories/USER.md
+memories/SOUL.md
+memories/JOURNAL.md
+
+# Bot logs
+*.log
+bot.out.log
+bot.err.log
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Local CLAUDE Code session storage (only if it accidentally lands here)
+.claude/projects/
+
+# Build output
+node_modules/
+*.tsbuildinfo

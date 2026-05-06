@@ -1,0 +1,111 @@
+[project]
+name = "opengriffin"
+version = "0.1.0"
+description = "Self-evolving personal agent. Telegram-first, multi-provider, OSS."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.11"
+authors = [{ name = "OpenGriffin" }]
+keywords = ["agent", "claude", "telegram", "ai", "automation", "skills"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications :: Chat",
+    "Topic :: Software Development :: Libraries",
+]
+
+dependencies = [
+    # core agent
+    "claude-agent-sdk>=0.1.73",
+    # messaging
+    "python-telegram-bot>=22.7",
+    # scheduling / web
+    "apscheduler>=3.11",
+    "aiohttp>=3.10",
+    # voice
+    "edge-tts>=7.0",
+    "faster-whisper>=1.0",
+    # utilities
+    "python-dotenv>=1.0",
+    "requests>=2.31",
+    "typer>=0.12",
+    "rich>=13.0",
+]
+
+[project.optional-dependencies]
+# Native (non-OpenAI-compat) providers
+anthropic = ["anthropic>=0.40"]
+gemini = ["google-generativeai>=0.8"]
+cohere = ["cohere>=5.0"]
+bedrock = ["boto3>=1.35"]
+ollama = ["ollama>=0.3"]
+
+# OpenAI-compatible providers (all use the same SDK)
+openai = ["openai>=1.50"]
+openrouter = ["openai>=1.50"]
+azure = ["openai>=1.50"]
+deepseek = ["openai>=1.50"]
+xai = ["openai>=1.50"]
+mistral = ["openai>=1.50"]
+perplexity = ["openai>=1.50"]
+together = ["openai>=1.50"]
+groq = ["openai>=1.50"]
+fireworks = ["openai>=1.50"]
+cerebras = ["openai>=1.50"]
+nvidia = ["openai>=1.50"]
+huggingface = ["openai>=1.50"]
+
+# Free gateways
+discord = ["discord.py>=2.4"]
+slack = ["slack-bolt>=1.20"]
+matrix = ["matrix-nio[e2e]>=0.25"]
+# email / imessage / signal use stdlib + system tools — no extras needed
+
+# Install everything
+all = [
+    "anthropic>=0.40",
+    "google-generativeai>=0.8",
+    "cohere>=5.0",
+    "boto3>=1.35",
+    "ollama>=0.3",
+    "openai>=1.50",
+    "discord.py>=2.4",
+    "slack-bolt>=1.20",
+    "matrix-nio[e2e]>=0.25",
+]
+
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.5",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+opengriffin = "opengriffin.cli:app"
+griffin = "opengriffin.cli:app"
+
+[project.urls]
+Homepage = "https://opengriffin.com"
+Repository = "https://github.com/opengriffin/opengriffin"
+Documentation = "https://opengriffin.com/docs"
+Issues = "https://github.com/opengriffin/opengriffin/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/opengriffin"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501"]
