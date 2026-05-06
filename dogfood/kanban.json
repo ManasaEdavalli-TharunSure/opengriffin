@@ -1,0 +1,31 @@
+{
+  "tasks": [
+    {
+      "id": "readme",
+      "title": "Draft OpenGriffin README.md",
+      "status": "done",
+      "assignee": "self",
+      "created_at": "2026-05-06T13:36:39",
+      "updated_at": "2026-05-06T13:38:00",
+      "result": "saved 12422 chars to README.md"
+    },
+    {
+      "id": "dashboard",
+      "title": "Build skill graph dashboard module",
+      "status": "done",
+      "assignee": "self",
+      "created_at": "2026-05-06T13:40:20",
+      "updated_at": "2026-05-06T13:43:12",
+      "result": "saved 20543 chars to src/opengriffin/dashboard/server.py"
+    },
+    {
+      "id": "journey",
+      "title": "Write JOURNEY.md narrating the dogfood build",
+      "status": "done",
+      "assignee": "self",
+      "created_at": "2026-05-06T13:43:12",
+      "updated_at": "2026-05-06T13:43:47",
+      "result": "saved 3586 chars to JOURNEY.md"
+    }
+  ]
+}

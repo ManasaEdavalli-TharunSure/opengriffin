@@ -1,0 +1,37 @@
+{
+  "triggers": [
+    {
+      "id": "stripe-revenue-drop",
+      "enabled": true,
+      "source": {"kind": "webhook", "route": "stripe"},
+      "predicate": "Did weekly revenue drop more than 10% week-over-week based on the payload?",
+      "action": {
+        "kind": "agent",
+        "prompt": "Investigate the revenue drop. Pull recent transactions, identify any anomalies, and draft a 3-paragraph postmortem with a hypothesis.",
+        "deliver_to": "home"
+      }
+    },
+    {
+      "id": "github-failed-ci",
+      "enabled": true,
+      "source": {"kind": "webhook", "route": "github"},
+      "predicate": "Is this a check_run conclusion=failure event on the main branch?",
+      "action": {
+        "kind": "send",
+        "text": "🚨 main CI failure",
+        "deliver_to": "home"
+      }
+    },
+    {
+      "id": "hourly-mention-poll",
+      "enabled": false,
+      "source": {"kind": "poll", "url": "https://api.example.com/mentions", "interval_sec": 3600},
+      "predicate": "Are there any new mentions with sentiment=negative in the response?",
+      "action": {
+        "kind": "agent",
+        "prompt": "Summarize the negative mentions and suggest a response strategy.",
+        "deliver_to": "home"
+      }
+    }
+  ]
+}

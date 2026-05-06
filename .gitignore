@@ -34,6 +34,13 @@ memories/USER.md
 memories/SOUL.md
 memories/JOURNAL.md
 
+# Whitelist build/proof artifacts that share names with runtime files
+!dogfood/kanban.json
+!dogfood/journal/
+!dogfood/journal/*.md
+!examples/*.json
+!memories.example/*.md
+
 # Bot logs
 *.log
 bot.out.log

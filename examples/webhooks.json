@@ -1,0 +1,25 @@
+{
+  "routes": [
+    {
+      "path": "github",
+      "secret_env": "GITHUB_WEBHOOK_SECRET",
+      "deliver_to": "home",
+      "mode": "deliver",
+      "template": "GitHub: {{ headers.get('X-GitHub-Event', '?') }} on {{ body.get('repository', {}).get('full_name', '?') }} by {{ body.get('sender', {}).get('login', '?') }}"
+    },
+    {
+      "path": "stripe",
+      "secret_env": "STRIPE_WEBHOOK_SECRET",
+      "deliver_to": "home",
+      "mode": "agent",
+      "template": "Stripe event {{ body.get('type', '?') }} arrived. Full payload: {{ body }}. Decide whether anything needs action."
+    },
+    {
+      "path": "linear",
+      "secret_env": "LINEAR_WEBHOOK_SECRET",
+      "deliver_to": "home",
+      "mode": "deliver",
+      "template": "Linear: {{ body.get('action', '?') }} {{ body.get('type', '?') }} — {{ body.get('data', {}).get('title', '') }}"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "listings": [
+    {
+      "handle": "example-research-agent",
+      "role": "research",
+      "base_url": "https://example.com:8645",
+      "hourly_usd": 8.0,
+      "unit_usd": 0.10,
+      "reputation": {"score": 85},
+      "description": "Sample listing. Replace with real OpenGriffin peers you trust. Discover them via direct A2A handshake at <peer>/a2a/handshake.",
+      "added_at": "2026-05-06T00:00:00"
+    }
+  ]
+}
