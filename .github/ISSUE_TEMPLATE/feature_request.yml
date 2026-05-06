@@ -1,0 +1,59 @@
+name: 💡 Feature request
+description: Propose a new capability or improvement
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature. Read `CONTRIBUTING.md` first — some classes of feature are out-of-scope (telemetry, hosted-only features, provider lock-in).
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the user pain or capability gap. "I can't do X" is more useful than "I want feature Y".
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How would the feature work? Sketch the user-facing surface (CLI flag, MCP tool, env var, etc.) and the internal mechanism.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else could solve the same problem? Why is your proposal better?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Which area does this touch?
+      options:
+        - Memory
+        - Skills
+        - Providers
+        - Gateways
+        - Cron / Triggers
+        - Security
+        - Migration
+        - CLI
+        - Dashboard
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contributing
+    attributes:
+      label: Are you willing to implement this?
+      options:
+        - label: Yes, I'd like to send a PR
+        - label: Maybe, with guidance
+        - label: No, just suggesting
