@@ -1,7 +1,9 @@
 {
-  "buildCommand": null,
-  "outputDirectory": "website",
-  "framework": null,
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd apps/web && npm install && npm run build",
+  "outputDirectory": "apps/web/.next",
+  "installCommand": "echo skip-root-install",
+  "framework": "nextjs",
   "cleanUrls": true,
   "trailingSlash": false
 }
