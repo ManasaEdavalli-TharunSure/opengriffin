@@ -8,6 +8,7 @@ import { Migration } from "@/components/sections/migration";
 import { Faq } from "@/components/sections/faq";
 import { Cta } from "@/components/sections/cta";
 import { Footer } from "@/components/sections/footer";
+import { SectionDivider } from "@/components/motion/section-divider";
 
 export default function HomePage() {
   return (
@@ -15,12 +16,19 @@ export default function HomePage() {
       <Nav />
       <main className="flex-1">
         <Hero />
+        <SectionDivider />
         <Why />
+        <SectionDivider />
         <Features />
+        <SectionDivider />
         <Providers />
+        <SectionDivider />
         <Install />
+        <SectionDivider />
         <Migration />
+        <SectionDivider />
         <Faq />
+        <SectionDivider />
         <Cta />
       </main>
       <Footer />

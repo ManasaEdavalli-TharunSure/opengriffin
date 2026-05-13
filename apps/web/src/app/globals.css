@@ -144,7 +144,40 @@ body {
 
 ::selection {
   background: var(--color-brand);
-  color: white;
+  color: #0a0a0a;
+}
+
+/* Sheen sweep for primary CTAs — diagonal highlight band that drifts
+   across the button on hover. Runs once per hover via CSS animation so
+   it doesn't loop forever in the background. */
+@keyframes og-sheen {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+.og-sheen-target {
+  position: relative;
+  overflow: hidden;
+}
+.og-sheen-target::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0s;
+}
+.og-sheen-target:hover::after {
+  animation: og-sheen 0.9s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

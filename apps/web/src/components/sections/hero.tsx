@@ -1,7 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useState, useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { Copy, Check, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -14,6 +19,20 @@ const INSTALL_CMD =
 export function Hero() {
   const [copied, setCopied] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+
+  // Parallax: the hero glow drifts up at ~0.4x scroll speed so the section
+  // feels alive without disorienting the reader. Tied to the hero section
+  // viewport via useScroll(target).
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const glowYRaw = useTransform(scrollYProgress, [0, 1], [0, -160]);
+  const glowOpacityRaw = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
+  // Freeze parallax when prefers-reduced-motion is on.
+  const glowY = shouldReduceMotion ? 0 : glowYRaw;
+  const glowOpacity = shouldReduceMotion ? 1 : glowOpacityRaw;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(INSTALL_CMD);
@@ -35,46 +54,80 @@ export function Hero() {
   };
 
   const item = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20, filter: "blur(8px)" },
     visible: {
       opacity: 1,
       y: 0,
+      filter: "blur(0px)",
       transition: {
-        duration: shouldReduceMotion ? 0.01 : 0.5,
+        duration: shouldReduceMotion ? 0.01 : 0.6,
         ease: [0.22, 1, 0.36, 1] as const,
       },
     },
   };
 
   return (
-    <section className="relative w-full overflow-hidden flex items-center justify-center px-4 py-24 sm:py-32">
-      {/* Animated background glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          aria-hidden
-          className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full opacity-30 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(ellipse, var(--color-brand) 0%, transparent 65%)",
-          }}
-          animate={
-            shouldReduceMotion
-              ? {}
-              : { scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }
-          }
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          aria-hidden
-          className="absolute bottom-[5%] right-[10%] w-[420px] h-[420px] rounded-full opacity-20 blur-3xl"
-          style={{
-            background:
-              "conic-gradient(from 0deg, var(--color-brand), var(--color-alive), var(--color-brand))",
-          }}
-          animate={shouldReduceMotion ? {} : { rotate: 360 }}
-          transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
+    <section
+      ref={sectionRef}
+      className="relative w-full overflow-hidden flex items-center justify-center px-4 pt-20 pb-24 sm:pt-28 sm:pb-32"
+    >
+      {/* Dot grid background with radial mask — dev-tool texture. The mask
+          tapers the dots toward the edges so they read as ambient depth
+          rather than a "table". */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none opacity-[0.25]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+          maskImage:
+            "radial-gradient(ellipse 70% 50% at 50% 30%, #000 50%, transparent 100%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 70% 50% at 50% 30%, #000 50%, transparent 100%)",
+        }}
+      />
+
+      {/* Layer 1: large soft orange radial glow (parallax) */}
+      <motion.div
+        aria-hidden
+        className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-3xl pointer-events-none"
+        style={{
+          y: glowY,
+          opacity: glowOpacity,
+          background:
+            "radial-gradient(ellipse, var(--color-brand) 0%, transparent 60%)",
+        }}
+      />
+
+      {/* Layer 2: slow-rotating conic gradient — agentic / energy. Disabled
+          under prefers-reduced-motion. */}
+      <motion.div
+        aria-hidden
+        className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[680px] h-[680px] rounded-full opacity-30 blur-2xl pointer-events-none mix-blend-screen"
+        style={{
+          background:
+            "conic-gradient(from 0deg, var(--color-brand) 0deg, var(--color-alive) 90deg, var(--color-brand-soft) 180deg, var(--color-alive-soft) 270deg, var(--color-brand) 360deg)",
+        }}
+        animate={shouldReduceMotion ? {} : { rotate: 360 }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+      />
+
+      {/* Layer 3: small amber accent glow bottom-right */}
+      <motion.div
+        aria-hidden
+        className="absolute bottom-[10%] right-[12%] w-[360px] h-[360px] rounded-full opacity-25 blur-3xl pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, var(--color-alive) 0%, transparent 65%)",
+        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : { scale: [1, 1.15, 1], opacity: [0.2, 0.32, 0.2] }
+        }
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <motion.div
         className="relative z-10 max-w-4xl mx-auto text-center"
@@ -82,11 +135,11 @@ export function Hero() {
         initial="hidden"
         animate="visible"
       >
-        {/* Status pill */}
+        {/* Status pill — pulsing amber dot */}
         <motion.div variants={item} className="flex justify-center mb-6">
           <Badge
             variant="outline"
-            className="px-4 py-1.5 bg-background/60 backdrop-blur-sm border-[var(--color-border-soft)] flex items-center gap-2"
+            className="px-4 py-1.5 bg-[var(--color-bg-elev)]/70 backdrop-blur-md border-[var(--color-border-soft)] flex items-center gap-2"
           >
             <span className="relative flex h-2 w-2">
               <span
@@ -98,8 +151,8 @@ export function Hero() {
                 style={{ backgroundColor: "var(--color-alive)" }}
               />
             </span>
-            <Sparkles className="w-3 h-3" />
-            <span className="text-xs font-medium tracking-wide">
+            <Sparkles className="w-3 h-3" style={{ color: "var(--color-alive-soft)" }} />
+            <span className="text-xs font-medium tracking-wide text-[var(--color-text)]">
               OSS · Apache 2.0 · self-evolving
             </span>
           </Badge>
@@ -117,7 +170,8 @@ export function Hero() {
             className="block mt-2"
             style={{
               background:
-                "linear-gradient(135deg, var(--color-brand-soft) 0%, var(--color-brand) 45%, var(--color-alive-soft) 100%)",
+                "linear-gradient(110deg, var(--color-brand-soft) 0%, var(--color-brand) 35%, var(--color-alive) 75%, var(--color-alive-soft) 100%)",
+              backgroundSize: "200% 100%",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -142,32 +196,60 @@ export function Hero() {
           variants={item}
           className="flex flex-col sm:flex-row gap-3 justify-center mb-12"
         >
-          <Button
-            size="lg"
-            className="text-base px-7 h-12 font-semibold shadow-[0_0_40px_-10px_var(--color-brand-glow)] hover:shadow-[0_0_60px_-10px_var(--color-brand-glow)]"
-            style={{ backgroundColor: "var(--color-brand)", color: "#fff" }}
-            asChild
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 22 }}
           >
-            <a href="#install">Install in one line</a>
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="text-base px-7 h-12 font-semibold bg-background/40 backdrop-blur-sm border-[var(--color-border-soft)] hover:border-[var(--color-border-hover)]"
-            asChild
-          >
-            <a
-              href="https://github.com/greentarallc/opengriffin"
-              target="_blank"
-              rel="noreferrer"
+            <Button
+              size="lg"
+              className="relative overflow-hidden text-base px-7 h-12 font-semibold shadow-[0_0_40px_-10px_var(--color-brand-glow)] hover:shadow-[0_0_60px_-8px_var(--color-brand-glow)] transition-shadow"
+              style={{
+                backgroundColor: "var(--color-brand)",
+                color: "#0a0a0a",
+              }}
+              asChild
             >
-              <GitHubIcon className="w-5 h-5 mr-1" />
-              View on GitHub
-            </a>
-          </Button>
+              <a href="#install">
+                {/* Background sheen sweeps across on hover */}
+                <span
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100"
+                  style={{
+                    background:
+                      "linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%)",
+                    transform: "translateX(-100%)",
+                    animation: "og-sheen 1.6s ease-out infinite",
+                  }}
+                />
+                <span className="relative">Install in one line</span>
+              </a>
+            </Button>
+          </motion.div>
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 22 }}
+          >
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-base px-7 h-12 font-semibold bg-[var(--color-bg-elev)]/40 backdrop-blur-sm border-[var(--color-border-soft)] hover:border-[var(--color-border-hover)] text-[var(--color-text)]"
+              asChild
+            >
+              <a
+                href="https://github.com/greentarallc/opengriffin"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <GitHubIcon className="w-5 h-5 mr-1" />
+                View on GitHub
+              </a>
+            </Button>
+          </motion.div>
         </motion.div>
 
-        {/* Install command */}
+        {/* Install command card */}
         <motion.div variants={item} className="flex justify-center">
           <Card className="inline-flex items-center gap-3 px-4 sm:px-5 py-3 bg-[var(--color-bg-elev)]/85 backdrop-blur-md border-[var(--color-border-soft)] shadow-2xl max-w-full">
             <code
