@@ -4,25 +4,28 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* OpenGriffin palette — dark OLED base + violet brand + green "alive" accent */
+  /* OpenGriffin palette — dark OLED base + modern orange brand + warm yellow
+     "alive" accent. Tuned for WCAG AA on #0a0a0a:
+       - orange-500 (#f97316) gives ~4.8:1 against pure black at 16px+
+       - amber-400 (#fbbf24) gives ~9.5:1 — safe for body-size text + glyphs */
   --color-bg-canvas: #0a0a0a;
   --color-bg-elev: #111118;
   --color-surface: rgba(255, 255, 255, 0.03);
   --color-surface-hover: rgba(255, 255, 255, 0.05);
   --color-border-soft: rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(124, 58, 237, 0.4);
+  --color-border-hover: rgba(249, 115, 22, 0.4);
 
   --color-text: #f8fafc;
   --color-text-dim: #a1a1aa;
   --color-text-faint: #71717a;
 
-  --color-brand: #7c3aed;        /* violet — continuity with current site */
-  --color-brand-soft: #a78bfa;
-  --color-brand-glow: rgba(124, 58, 237, 0.5);
+  --color-brand: #f97316;        /* modern orange — energetic, agentic */
+  --color-brand-soft: #fb923c;
+  --color-brand-glow: rgba(249, 115, 22, 0.55);
 
-  --color-alive: #22c55e;        /* green — "running / online" indicators */
-  --color-alive-soft: #4ade80;
-  --color-alive-glow: rgba(34, 197, 94, 0.5);
+  --color-alive: #fbbf24;        /* warm yellow — "running / online" indicators */
+  --color-alive-soft: #fde68a;
+  --color-alive-glow: rgba(251, 191, 36, 0.5);
 
   --color-warn: #f59e0b;
   --color-danger: #ef4444;
@@ -36,18 +39,18 @@
   --card-foreground: #f8fafc;
   --popover: #111118;
   --popover-foreground: #f8fafc;
-  --primary: #7c3aed;
-  --primary-foreground: #ffffff;
+  --primary: #f97316;
+  --primary-foreground: #0a0a0a;  /* dark text on orange = AA at any size */
   --secondary: #1f2937;
   --secondary-foreground: #f8fafc;
   --muted: #18181b;
   --muted-foreground: #a1a1aa;
-  --accent: #1f1f2a;
-  --accent-foreground: #f8fafc;
+  --accent: #2a1f10;              /* subtly orange-tinted dark accent surface */
+  --accent-foreground: #fed7aa;
   --destructive: #ef4444;
   --border: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.1);
-  --ring: #7c3aed;
+  --ring: #f97316;
 }
 
 @theme inline {
