@@ -110,6 +110,50 @@ def migrate_legacy_state(*, verbose: bool = False) -> dict:
                     shutil.copytree(src, dst)
                     moved.append((str(src) + "/", str(dst) + "/"))
 
+    # Per-deployment state files — sessions, scheduled jobs, kanban board,
+    # aliases, dead-man's switch state, usage log, webhook routes. Copy
+    # one-by-one so existing state at the destination wins.
+    for fname in (
+        "sessions.json",
+        "kanban.json",
+        "aliases.json",
+        "jobs.json",
+        "deadman.json",
+        "usage.jsonl",
+        "webhooks.json",
+    ):
+        src = _LEGACY_HOME / fname
+        dst = OG_HOME / fname
+        if not src.is_file():
+            continue
+        if dst.exists():
+            skipped.append(f"{src} (target exists)")
+            continue
+        shutil.copy2(src, dst)
+        moved.append((str(src), str(dst)))
+
+    # Runtime subdirs created by various modules. Each is copied wholesale
+    # if the target doesn't already exist.
+    for dname in (
+        "agents",
+        "checkpoints",
+        "predictions",
+        "skill_proposals",
+        "workers",
+        "scripts",
+    ):
+        src = _LEGACY_HOME / dname
+        dst = OG_HOME / dname
+        if not src.is_dir():
+            continue
+        if dst.exists() and any(dst.iterdir()):
+            skipped.append(f"{src}/ (target non-empty)")
+            continue
+        if dst.exists():
+            dst.rmdir()  # empty placeholder created by another module
+        shutil.copytree(src, dst)
+        moved.append((str(src) + "/", str(dst) + "/"))
+
     if moved and verbose:
         for src, dst in moved:
             log.info("paths.migrate: %s → %s", src, dst)
