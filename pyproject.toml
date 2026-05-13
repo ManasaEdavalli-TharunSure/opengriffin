@@ -91,9 +91,9 @@ griffin = "opengriffin.cli:app"
 
 [project.urls]
 Homepage = "https://opengriffin.com"
-Repository = "https://github.com/opengriffin/opengriffin"
+Repository = "https://github.com/greentarallc/opengriffin"
 Documentation = "https://opengriffin.com/docs"
-Issues = "https://github.com/opengriffin/opengriffin/issues"
+Issues = "https://github.com/greentarallc/opengriffin/issues"
 
 [build-system]
 requires = ["hatchling"]

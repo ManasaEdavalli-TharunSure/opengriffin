@@ -110,7 +110,9 @@ ENGAGEMENT_PHRASES = (
 def _journal_lines(days: int = 14) -> list[tuple[dt.datetime, str]]:
     """Pull recent journal entries with timestamps. journal entries are
     appended as ## YYYY-MM-DD blocks to ~/claude-bot/memories/JOURNAL.md."""
-    f = Path.home() / "claude-bot" / "memories" / "JOURNAL.md"
+    from . import paths
+
+    f = paths.JOURNAL_FILE
     if not f.is_file():
         return []
     out: list[tuple[dt.datetime, str]] = []
@@ -288,7 +290,9 @@ def detect_memory_self_edit() -> dict:
     that memory.py writes when the agent (vs. the user) created an entry.
     Here we approximate by counting how many entries contain agent-flavored
     phrasing ("I noticed", "based on observation", "consistent with prior")."""
-    mem_dir = Path.home() / "claude-bot" / "memories"
+    from . import paths
+
+    mem_dir = paths.MEM_DIR
     user_md = mem_dir / "USER.md"
     if not user_md.is_file():
         return {"score": 0.0, "evidence": "USER.md missing"}

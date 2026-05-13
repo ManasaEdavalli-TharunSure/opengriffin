@@ -46,6 +46,7 @@ from . import checkpoints as checkpoints_module
 from . import cron as cron_module
 from . import kanban as kanban_module
 from . import memory as memory_module
+from . import paths as paths_module
 from . import progress as progress_module
 from . import recall as recall_module
 from . import self_improve as self_improve_module
@@ -56,11 +57,18 @@ from . import voice as voice_module
 from . import webhooks as webhooks_module
 from .redact import redact
 
-# Look for .env in: CWD, ~/.config/opengriffin/, or wherever OPENGRIFFIN_HOME points.
+# Auto-migrate state from the legacy ~/claude-bot/ layout if present.
+# Idempotent — skips anything that already exists at the new location.
+paths_module.migrate_legacy_state()
+
+# Look for .env in priority order: OG_HOME/.env (canonical), CWD (dev
+# convenience for `git clone && drop .env in the repo root && opengriffin run`),
+# legacy XDG location. First hit wins so there's no ambiguity about which
+# file the bot is reading.
 for _p in (
+    paths_module.ENV_FILE,
     Path.cwd() / ".env",
     Path.home() / ".config" / "opengriffin" / ".env",
-    Path(os.environ.get("OPENGRIFFIN_HOME", str(Path.home() / "opengriffin"))) / ".env",
 ):
     if _p.is_file():
         load_dotenv(_p)

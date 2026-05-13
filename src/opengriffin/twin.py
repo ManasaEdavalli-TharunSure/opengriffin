@@ -123,7 +123,9 @@ def _read(path: Path) -> str:
 def _memory_snapshot() -> dict:
     """Read MEMORY/USER/SOUL at simulation time. Used both as input AND
     cache key — if the snapshot changes, prior simulations are stale."""
-    mem_dir = Path.home() / "claude-bot" / "memories"
+    from . import paths
+
+    mem_dir = paths.MEM_DIR
     snap = {
         "memory_md": _read(mem_dir / "MEMORY.md"),
         "user_md": _read(mem_dir / "USER.md"),

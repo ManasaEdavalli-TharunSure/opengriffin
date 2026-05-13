@@ -1,9 +1,9 @@
 """Adversarial Improvement Market — bug bounty for agent capabilities.
 
-Hermes / DSPy / GEPA optimise the agent against fixed benchmarks. The
-frontier move is to open the improvement loop: anyone can submit a
-failure case, the agent replays it, and *novel* failures (ones that
-produce a measurable behaviour change) score the submitter.
+Most self-improvement loops in agent frameworks optimise against a
+fixed internal benchmark. The frontier move is to open the loop: anyone
+can submit a failure case, the agent replays it, and *novel* failures
+(ones that produce a measurable behaviour change) score the submitter.
 
 This module ships the local primitives for that market. x402 payout
 plumbing is deferred — start by proving the workflow + novelty scoring
