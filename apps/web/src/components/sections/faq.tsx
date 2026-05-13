@@ -55,7 +55,7 @@ export function Faq() {
   return (
     <section
       id="faq"
-      className="px-6 py-24 sm:py-32 border-t border-[var(--color-border-soft)]"
+      className="px-6 py-24 sm:py-32"
     >
       <Reveal className="max-w-3xl mx-auto">
         <RevealItem as="h2" className="text-3xl sm:text-5xl font-bold tracking-tight">

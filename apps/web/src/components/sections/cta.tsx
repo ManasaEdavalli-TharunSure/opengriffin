@@ -7,7 +7,7 @@ import { motion, useReducedMotion } from "framer-motion";
 export function Cta() {
   const reduce = useReducedMotion();
   return (
-    <section className="relative px-6 py-32 sm:py-40 border-t border-[var(--color-border-soft)] overflow-hidden">
+    <section className="relative px-6 py-32 sm:py-40 overflow-hidden">
       <motion.div
         aria-hidden
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] rounded-full opacity-25 blur-3xl pointer-events-none"

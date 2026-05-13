@@ -21,7 +21,7 @@ export function Why() {
   return (
     <section
       id="why"
-      className="px-6 py-24 sm:py-32 border-t border-[var(--color-border-soft)]"
+      className="px-6 py-24 sm:py-32"
     >
       <Reveal className="max-w-6xl mx-auto">
         <RevealItem
