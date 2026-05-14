@@ -9,7 +9,7 @@ and what to expect when you do.
 
 **Do not file public GitHub issues for security bugs.** Open a private
 report instead — use GitHub's "Report a vulnerability" button on the
-[Security tab](https://github.com/greentarallc/opengriffin/security/advisories/new),
+[Security tab](https://github.com/ManasaEdavalli-TharunSure/opengriffin/security/advisories/new),
 or email `security@opengriffin.com`.
 
 Please include:

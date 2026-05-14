@@ -39,7 +39,7 @@ export function Cta() {
         </RevealItem>
         <RevealItem className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="https://github.com/greentarallc/opengriffin"
+            href="https://github.com/ManasaEdavalli-TharunSure/opengriffin"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-md font-semibold text-white shadow-[0_0_50px_-10px_var(--color-brand-glow)] hover:shadow-[0_0_70px_-10px_var(--color-brand-glow)] transition-shadow"

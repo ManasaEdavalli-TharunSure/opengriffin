@@ -26,7 +26,7 @@ const NAV_LINKS = [
   { href: "#why", label: "Why" },
   { href: "#faq", label: "FAQ" },
   {
-    href: "https://github.com/greentarallc/opengriffin/blob/main/docs/index.md",
+    href: "https://github.com/ManasaEdavalli-TharunSure/opengriffin/blob/main/docs/index.md",
     label: "Docs",
     external: true,
   },
@@ -98,7 +98,7 @@ export function Nav() {
               <NavLink key={link.href} {...link} />
             ))}
             <a
-              href="https://github.com/greentarallc/opengriffin"
+              href="https://github.com/ManasaEdavalli-TharunSure/opengriffin"
               target="_blank"
               rel="noreferrer"
               className="ml-2 flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white text-black text-sm font-medium hover:bg-zinc-200 transition-all hover:scale-[1.02] active:scale-[0.98]"
@@ -195,7 +195,7 @@ export function Nav() {
                 </motion.a>
               ))}
               <motion.a
-                href="https://github.com/greentarallc/opengriffin"
+                href="https://github.com/ManasaEdavalli-TharunSure/opengriffin"
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => setOpen(false)}

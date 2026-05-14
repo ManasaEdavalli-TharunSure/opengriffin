@@ -59,7 +59,7 @@ A new feature usually lands in:
 ### First-time setup
 
 ```bash
-git clone https://github.com/greentarallc/opengriffin
+git clone https://github.com/ManasaEdavalli-TharunSure/opengriffin
 cd opengriffin
 uv sync --all-extras           # installs deps + dev tools
 cp .env.example .env           # then edit with your keys
@@ -84,7 +84,7 @@ uv run opengriffin dashboard
 
 ## What to work on
 
-Good first issues are tagged [`good first issue`](https://github.com/greentarallc/opengriffin/labels/good%20first%20issue). Beyond those, the highest-leverage areas:
+Good first issues are tagged [`good first issue`](https://github.com/ManasaEdavalli-TharunSure/opengriffin/labels/good%20first%20issue). Beyond those, the highest-leverage areas:
 
 | Area | Why |
 |---|---|
@@ -288,8 +288,8 @@ When receiving critique: assume good intent; clarify, don't escalate.
 
 ## Questions?
 
-- Open a [discussion](https://github.com/greentarallc/opengriffin/discussions) for design questions.
-- Open an [issue](https://github.com/greentarallc/opengriffin/issues) for bugs or feature requests.
+- Open a [discussion](https://github.com/ManasaEdavalli-TharunSure/opengriffin/discussions) for design questions.
+- Open an [issue](https://github.com/ManasaEdavalli-TharunSure/opengriffin/issues) for bugs or feature requests.
 - For anything else: hello@opengriffin.com.
 
 Welcome aboard.
