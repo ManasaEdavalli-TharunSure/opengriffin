@@ -17,7 +17,7 @@ cover the deeper topics.
 
 ## Quick links
 
-- Install: `curl -fsSL https://raw.githubusercontent.com/greentarallc/opengriffin/main/scripts/install.sh | bash`
+- Install: `curl -fsSL https://raw.githubusercontent.com/ManasaEdavalli-TharunSure/opengriffin/main/scripts/install.sh | bash`
 - Config example: [`.env.example`](../.env.example)
 - Bundled skills: [`bundled_skills/`](../bundled_skills/)
 - Example configs: [`examples/`](../examples/)

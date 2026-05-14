@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { GitHubIcon } from "@/components/icons/github";
 
 const INSTALL_CMD =
-  "curl -fsSL https://raw.githubusercontent.com/greentarallc/opengriffin/main/scripts/install.sh | bash";
+  "curl -fsSL https://raw.githubusercontent.com/ManasaEdavalli-TharunSure/opengriffin/main/scripts/install.sh | bash";
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
@@ -238,7 +238,7 @@ export function Hero() {
               asChild
             >
               <a
-                href="https://github.com/greentarallc/opengriffin"
+                href="https://github.com/ManasaEdavalli-TharunSure/opengriffin"
                 target="_blank"
                 rel="noreferrer"
               >

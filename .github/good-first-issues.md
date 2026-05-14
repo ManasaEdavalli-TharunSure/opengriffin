@@ -1,6 +1,6 @@
 # 10 ready-to-paste good-first-issue stubs
 
-For each: copy title + body into a new issue at https://github.com/greentarallc/opengriffin/issues/new?labels=good+first+issue. Add the `good first issue` label.
+For each: copy title + body into a new issue at https://github.com/ManasaEdavalli-TharunSure/opengriffin/issues/new?labels=good+first+issue. Add the `good first issue` label.
 
 These are all small, well-scoped, and unblock real value. Not just busywork.
 

@@ -1,6 +1,6 @@
 # GitHub repo settings cheatsheet
 
-Paste-ready values for https://github.com/greentarallc/opengriffin/settings.
+Paste-ready values for https://github.com/ManasaEdavalli-TharunSure/opengriffin/settings.
 
 ## About → Description
 

@@ -4,7 +4,7 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
-[![CI](https://github.com/greentarallc/opengriffin/actions/workflows/ci.yml/badge.svg)](https://github.com/greentarallc/opengriffin/actions/workflows/ci.yml)
+[![CI](https://github.com/ManasaEdavalli-TharunSure/opengriffin/actions/workflows/ci.yml/badge.svg)](https://github.com/ManasaEdavalli-TharunSure/opengriffin/actions/workflows/ci.yml)
 [![Telegram](https://img.shields.io/badge/Telegram-bot-26A5E4.svg?logo=telegram&logoColor=white)](https://core.telegram.org/bots)
 
 OpenGriffin is a long-running agent process that talks to you on Telegram, keeps a journal, schedules its own work, learns new skills on the fly, and remembers what matters across sessions. It is built on the [Claude Agent SDK](https://github.com/anthropics/claude-agent-sdk-python) and degrades gracefully to OpenAI, OpenRouter, Azure, Gemini, Mistral, Groq, Bedrock, local Ollama, and 13 more backends — bring whatever key you have.
@@ -70,10 +70,10 @@ Every night, OpenGriffin runs without prompting:
 
 ```bash
 # One-line install (clones, runs uv sync, writes a launchctl/systemd unit)
-curl -fsSL https://raw.githubusercontent.com/greentarallc/opengriffin/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ManasaEdavalli-TharunSure/opengriffin/main/scripts/install.sh | bash
 
 # Or from source
-git clone https://github.com/greentarallc/opengriffin.git
+git clone https://github.com/ManasaEdavalli-TharunSure/opengriffin.git
 cd opengriffin
 uv sync --all-extras
 cp .env.example ~/.opengriffin/.env  # fill in TELEGRAM_BOT_TOKEN

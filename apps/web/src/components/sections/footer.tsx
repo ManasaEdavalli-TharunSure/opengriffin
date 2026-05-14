@@ -5,7 +5,7 @@ export function Footer() {
         <div>© 2026 OpenGriffin contributors · Apache 2.0</div>
         <div className="flex gap-6">
           <a
-            href="https://github.com/greentarallc/opengriffin"
+            href="https://github.com/ManasaEdavalli-TharunSure/opengriffin"
             target="_blank"
             rel="noreferrer"
             className="hover:text-[var(--color-text-dim)] transition-colors"

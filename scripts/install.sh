@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # OpenGriffin one-line install — BYO compute.
-# Usage:  curl -fsSL https://raw.githubusercontent.com/greentarallc/opengriffin/main/scripts/install.sh | bash
+# Usage:  curl -fsSL https://raw.githubusercontent.com/ManasaEdavalli-TharunSure/opengriffin/main/scripts/install.sh | bash
 
 set -euo pipefail
 
@@ -60,7 +60,7 @@ if [ -d "$INSTALL_DIR/.git" ]; then
     git -C "$INSTALL_DIR" pull --ff-only
 else
     echo "→ Cloning into $INSTALL_DIR"
-    git clone https://github.com/greentarallc/opengriffin.git "$INSTALL_DIR"
+    git clone https://github.com/ManasaEdavalli-TharunSure/opengriffin.git "$INSTALL_DIR"
 fi
 
 # 4. Install.
@@ -130,5 +130,5 @@ Next:
        macOS: cp scripts/opengriffin.plist ~/Library/LaunchAgents/
 
 Docs:  https://opengriffin.com/docs
-Repo:  https://github.com/greentarallc/opengriffin
+Repo:  https://github.com/ManasaEdavalli-TharunSure/opengriffin
 EOF

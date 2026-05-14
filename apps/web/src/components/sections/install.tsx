@@ -6,7 +6,7 @@ import { Copy, Check } from "lucide-react";
 import { Reveal, RevealItem } from "@/components/motion/scroll-reveal";
 
 const INSTALL_CMD =
-  "curl -fsSL https://raw.githubusercontent.com/greentarallc/opengriffin/main/scripts/install.sh | bash";
+  "curl -fsSL https://raw.githubusercontent.com/ManasaEdavalli-TharunSure/opengriffin/main/scripts/install.sh | bash";
 
 const STEPS = [
   {

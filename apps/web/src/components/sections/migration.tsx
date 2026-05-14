@@ -26,7 +26,7 @@ griffin migrate from-<source>      # run an importer`}
             <p className="text-[var(--color-text-dim)] text-sm mt-3">
               Imports MEMORY/USER/SOUL.md, cron schedules, channel directory,
               recent message history, and any local scripts. See{" "}
-              <a href="https://github.com/greentarallc/opengriffin/blob/main/docs/migration.md" className="underline">
+              <a href="https://github.com/ManasaEdavalli-TharunSure/opengriffin/blob/main/docs/migration.md" className="underline">
                 docs/migration.md
               </a>{" "}
               for the full mapping.
