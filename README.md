@@ -104,6 +104,61 @@ opengriffin migrate from-hermes
 
 ---
 
+## First-time Telegram setup
+
+OpenGriffin is a real Telegram bot you own end-to-end. You create the bot in Telegram, paste its token into your local `.env`, and run the agent on your own machine. There is no hosted onboarding, no waitlist, no account.
+
+### 1. Create the bot with `@BotFather`
+
+1. Open Telegram and search for **@BotFather** — start a chat.
+2. Send `/newbot`.
+3. Pick a **display name** (e.g. "My Personal Bot").
+4. Pick a **username** ending in `bot` (e.g. `mybot_bot`). Must be globally unique.
+5. BotFather replies with a token like `1234567890:AAH...` — copy it; this is your `TELEGRAM_BOT_TOKEN`.
+
+Optional, while you're in BotFather:
+
+- `/setprivacy` → **Enable** (default) means the bot only sees DMs and group messages that mention/reply to it. **Disable** lets it read every group message.
+- `/setdescription` and `/setuserpic` for the profile.
+- `/setcommands` to register the slash-command menu (or use the `setMyCommands` snippet in [docs/gateways/telegram.md](docs/gateways/telegram.md#register-the-command-menu-one-time)).
+
+### 2. Find your Telegram user id
+
+DM **@userinfobot** anything; it replies with your numeric user id (e.g. `987654321`). You need this to lock the bot to you.
+
+### 3. Fill in `~/.opengriffin/.env`
+
+```bash
+# Minimum to get a Telegram bot answering
+TELEGRAM_BOT_TOKEN=1234567890:AAH...your-token-here
+TELEGRAM_ALLOWED_USERS=987654321       # your user id from step 2
+TELEGRAM_HOME_CHANNEL=987654321        # where cron + proactive messages go
+
+# At least one model key — pick whichever you have
+ANTHROPIC_API_KEY=sk-ant-...
+# or OPENAI_API_KEY=sk-..., GEMINI_API_KEY=..., GROQ_API_KEY=..., etc.
+OPENGRIFFIN_PROVIDER=anthropic         # match the key you set above
+```
+
+**Important:** leaving `TELEGRAM_ALLOWED_USERS` empty makes your bot **open to anyone** who finds the username. Set it to your numeric id while testing.
+
+### 4. Verify and run
+
+```bash
+opengriffin doctor      # checks: token set? provider key set? state dir writable?
+opengriffin run         # starts the long-polling loop
+```
+
+Open your bot in Telegram and send `/start`. You should see a typing indicator, then a reply, then the command menu. From there:
+
+- `/whoami` confirms the bot recognised your user id.
+- `/model openai gpt-4o-mini` switches providers per-chat.
+- `/journal` shows today's auto-journal entry.
+
+The full 24-command reference, voice-note setup, group-chat behavior, and the most common failures (`Conflict: terminated by other getUpdates`, `Unauthorized message from…`) are in **[docs/gateways/telegram.md](docs/gateways/telegram.md)**.
+
+---
+
 ## Provider matrix
 
 One env var (`OPENGRIFFIN_PROVIDER`) picks the backend. Full features (skills, MCP, hooks, sessions) on Claude; chat + function-calling fallbacks on every other provider.
