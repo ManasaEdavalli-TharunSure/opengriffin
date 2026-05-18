@@ -276,6 +276,115 @@ export const features: Feature[] = [
   },
 ];
 
+export type Gateway = {
+  name: string;
+  difficulty: 1 | 2 | 3;
+  blurb: string;
+  steps: string[];
+  envHint: string;
+  docHref: string;
+};
+
+const GH_DOCS =
+  "https://github.com/ManasaEdavalli-TharunSure/opengriffin/blob/main/docs/gateways";
+
+export const gateways: Gateway[] = [
+  {
+    name: "Telegram",
+    difficulty: 1,
+    blurb:
+      "Canonical gateway. Long-polling, voice notes, inline-button approvals.",
+    steps: [
+      "@BotFather → /newbot → copy the token",
+      "@userinfobot → get your numeric user id",
+      "Paste into .env, opengriffin run, send /start",
+    ],
+    envHint:
+      "TELEGRAM_BOT_TOKEN, TELEGRAM_ALLOWED_USERS, TELEGRAM_HOME_CHANNEL",
+    docHref: `${GH_DOCS}/telegram.md`,
+  },
+  {
+    name: "Discord",
+    difficulty: 1,
+    blurb:
+      "Bot user with Message Content Intent. DMs + @-mentions in channels.",
+    steps: [
+      "Developer Portal → New Application → Bot → Reset Token",
+      "Enable Message Content Intent · invite via OAuth2 URL Generator",
+      "pip install 'opengriffin[discord]' && opengriffin run",
+    ],
+    envHint: "DISCORD_BOT_TOKEN, DISCORD_ALLOWED_USERS",
+    docHref: `${GH_DOCS}/discord.md`,
+  },
+  {
+    name: "Slack",
+    difficulty: 2,
+    blurb:
+      "Bolt Socket Mode — no public webhook URL needed. Threading preserved.",
+    steps: [
+      "api.slack.com/apps → Socket Mode → App-Level Token (xapp-)",
+      "OAuth scopes + Event Subscriptions → install to workspace (xoxb-)",
+      "pip install 'opengriffin[slack]' && opengriffin run",
+    ],
+    envHint: "SLACK_BOT_TOKEN, SLACK_APP_TOKEN, SLACK_ALLOWED_USERS",
+    docHref: `${GH_DOCS}/slack.md`,
+  },
+  {
+    name: "Email",
+    difficulty: 2,
+    blurb:
+      "IMAP polling in, SMTP out. Stdlib only. Threading via message-id.",
+    steps: [
+      "Get an App Password (Gmail / iCloud need one with 2FA)",
+      "Fill IMAP + SMTP host/port/user/pass + allowed senders",
+      "opengriffin run · polls every 60 s",
+    ],
+    envHint:
+      "EMAIL_IMAP_*, EMAIL_SMTP_*, EMAIL_FROM_ADDR, EMAIL_ALLOWED_SENDERS",
+    docHref: `${GH_DOCS}/email.md`,
+  },
+  {
+    name: "iMessage",
+    difficulty: 2,
+    blurb:
+      "macOS only. Reads chat.db directly, sends via AppleScript through Messages.app.",
+    steps: [
+      "Grant Full Disk Access to your terminal (then restart it)",
+      "Grant Automation access to Messages.app",
+      "Set IMESSAGE_ALLOWED_HANDLES (required — no open mode)",
+    ],
+    envHint: "IMESSAGE_ALLOWED_HANDLES, IMESSAGE_DB_PATH",
+    docHref: `${GH_DOCS}/imessage.md`,
+  },
+  {
+    name: "Matrix",
+    difficulty: 2,
+    blurb:
+      "Any homeserver: matrix.org, Synapse, Beeper, Element. E2E via Olm/Megolm.",
+    steps: [
+      "Register a bot account (matrix.org or your homeserver)",
+      "Grab access token (or store the password)",
+      "pip install 'opengriffin[matrix]' && opengriffin run",
+    ],
+    envHint:
+      "MATRIX_HOMESERVER, MATRIX_USER_ID, MATRIX_PASSWORD or MATRIX_ACCESS_TOKEN, MATRIX_ALLOWED_USERS",
+    docHref: `${GH_DOCS}/matrix.md`,
+  },
+  {
+    name: "Signal",
+    difficulty: 3,
+    blurb:
+      "Wraps signal-cli. Hardest of the seven — JVM 21+ and a dedicated number.",
+    steps: [
+      "brew install signal-cli (Java 21+)",
+      "signal-cli register + verify with SMS code",
+      "Set SIGNAL_NUMBER + SIGNAL_ALLOWED_NUMBERS, run",
+    ],
+    envHint: "SIGNAL_NUMBER, SIGNAL_ALLOWED_NUMBERS",
+    docHref: `${GH_DOCS}/signal.md`,
+  },
+];
+
 export const providers = [
   "Claude Max OAuth",
   "Anthropic API",
