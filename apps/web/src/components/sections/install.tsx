@@ -11,11 +11,18 @@ const INSTALL_CMD =
 const STEPS = [
   {
     label: "Step 1",
-    title: "BotFather token",
+    title: "Pick your messenger",
     body: (
       <>
-        Open Telegram, message @BotFather, run <span className="mono">/newbot</span>.
-        Save the token to <span className="mono">.env</span>.
+        Telegram, Discord, Slack, Email, iMessage, Matrix, or Signal — grab
+        the credential and add it to <span className="mono">.env</span>. See{" "}
+        <a
+          href="#gateways"
+          className="text-[var(--color-brand-soft)] hover:underline"
+        >
+          all 7 gateways
+        </a>
+        .
       </>
     ),
   },

@@ -4,6 +4,7 @@ import { Why } from "@/components/sections/why";
 import { Features } from "@/components/sections/features";
 import { Providers } from "@/components/sections/providers";
 import { Install } from "@/components/sections/install";
+import { Gateways } from "@/components/sections/gateways";
 import { Migration } from "@/components/sections/migration";
 import { Faq } from "@/components/sections/faq";
 import { Cta } from "@/components/sections/cta";
@@ -24,6 +25,8 @@ export default function HomePage() {
         <Providers />
         <SectionDivider />
         <Install />
+        <SectionDivider />
+        <Gateways />
         <SectionDivider />
         <Migration />
         <SectionDivider />

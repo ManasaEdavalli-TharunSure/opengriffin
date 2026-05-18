@@ -104,6 +104,185 @@ opengriffin migrate from-hermes
 
 ---
 
+## First-time setup — pick your messenger
+
+OpenGriffin runs **the same brain** across 7 free-pricing platforms. You create the bot in whichever messenger you use, paste its credential into your local `.env`, and run the agent on your own machine. There is no hosted onboarding, no waitlist, no account — you own the keys, the data, and the process.
+
+The shared steps for every gateway are:
+
+1. Create a bot / account / app on the platform → get a credential.
+2. Find your own user id / handle / phone number on the platform.
+3. Add credential + allowed-users env vars to `~/.opengriffin/.env`.
+4. (For some gateways) `pip install 'opengriffin[<gateway>]'` to pull the platform SDK.
+5. `opengriffin doctor` then `opengriffin run`.
+
+You also need **at least one model key** in `.env`. Any of these is enough:
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-...           # or OPENAI_API_KEY, GEMINI_API_KEY,
+                                        # GROQ_API_KEY, DEEPSEEK_API_KEY, …
+OPENGRIFFIN_PROVIDER=anthropic          # must match the key you set
+```
+
+You can enable **multiple gateways at once** — the bot starts every gateway whose required env vars are present. They share one memory, one kanban, one set of MCP servers. See [Cross-platform identity](docs/gateways/index.md#cross-platform-identity) to link your accounts.
+
+> ⚠️ Across every gateway: leaving the `*_ALLOWED_USERS` (or equivalent) env var **empty** makes the bot **open to anyone** who finds it. Set it to your own id while testing.
+
+| Platform | Difficulty | Extras needed | Detailed doc |
+|---|---|---|---|
+| [Telegram](#telegram) | ⭐ easy | none | [docs/gateways/telegram.md](docs/gateways/telegram.md) |
+| [Discord](#discord) | ⭐ easy | `[discord]` | [docs/gateways/discord.md](docs/gateways/discord.md) |
+| [Slack](#slack) | ⭐⭐ medium | `[slack]` | [docs/gateways/slack.md](docs/gateways/slack.md) |
+| [Email](#email-imapsmtp) | ⭐⭐ medium | none (stdlib) | [docs/gateways/email.md](docs/gateways/email.md) |
+| [iMessage](#imessage-macos-only) | ⭐⭐ medium | macOS only | [docs/gateways/imessage.md](docs/gateways/imessage.md) |
+| [Matrix](#matrix) | ⭐⭐ medium | `[matrix]` | [docs/gateways/matrix.md](docs/gateways/matrix.md) |
+| [Signal](#signal) | ⭐⭐⭐ hard | `signal-cli` + Java 21+ | [docs/gateways/signal.md](docs/gateways/signal.md) |
+
+### Telegram
+
+1. **Create the bot** — DM **@BotFather** → `/newbot` → pick display name → pick a username ending in `bot` → copy the `1234567890:AAH...` token.
+2. **Get your user id** — DM **@userinfobot** anything; it replies with your numeric id (e.g. `987654321`).
+3. **Configure** `~/.opengriffin/.env`:
+   ```bash
+   TELEGRAM_BOT_TOKEN=1234567890:AAH...your-token-here
+   TELEGRAM_ALLOWED_USERS=987654321       # your numeric user id
+   TELEGRAM_HOME_CHANNEL=987654321        # default destination for cron + proactive messages
+   ```
+4. **Run** — `opengriffin doctor && opengriffin run`. Open your bot in Telegram, send `/start`, you'll see the command menu. `/whoami` confirms auth.
+
+Optional BotFather steps while you're there: `/setprivacy` (Enable = DM/mention-only; Disable = sees all group messages), `/setdescription`, `/setuserpic`, `/setcommands` (or use the `setMyCommands` curl snippet in the detailed doc).
+
+### Discord
+
+1. **Create the bot** — go to <https://discord.com/developers/applications> → **New Application** → **Bot** tab → **Reset Token** → copy.
+2. **Enable Message Content Intent** under Privileged Gateway Intents (without this, the bot connects but never sees messages).
+3. **Invite it to your server** — OAuth2 → URL Generator → scopes: `bot`, `applications.commands`; permissions: `Send Messages`, `Read Message History`, `Use Slash Commands`. Open the generated URL and pick your server.
+4. **Get your user id** — enable Developer Mode (User Settings → Advanced), right-click your name → Copy User ID.
+5. **Configure**:
+   ```bash
+   DISCORD_BOT_TOKEN=                     # from step 1
+   DISCORD_ALLOWED_USERS=                 # comma-separated numeric user ids
+   ```
+6. **Install + run** — `pip install 'opengriffin[discord]'` then `opengriffin run`. DM the bot or @-mention it in a channel.
+
+Discord caps messages at 2000 chars; OpenGriffin auto-splits longer replies. Voice channels and slash commands are not yet wired.
+
+### Slack
+
+Uses Slack Bolt **Socket Mode** — no public webhook URL needed.
+
+1. **Create the app** — <https://api.slack.com/apps> → **Create New App** → from scratch.
+2. **App-Level Token** — Socket Mode → Enable → Generate App-Level Token with `connections:write` scope. Save the `xapp-...` token.
+3. **Bot Token Scopes** under OAuth & Permissions: `chat:write`, `im:history`, `im:read`, `im:write`, `channels:history`, `channels:read`, `app_mentions:read`.
+4. **Event Subscriptions** → Enable → subscribe to bot events: `message.im`, `app_mention`.
+5. **Install App to Workspace** — copy the bot token (`xoxb-...`).
+6. **Configure**:
+   ```bash
+   SLACK_BOT_TOKEN=xoxb-...
+   SLACK_APP_TOKEN=xapp-...
+   SLACK_ALLOWED_USERS=                   # comma-separated Slack user ids; empty = open to workspace
+   ```
+7. **Install + run** — `pip install 'opengriffin[slack]'` then `opengriffin run`. DM the bot or @-mention it in any channel where it's been added.
+
+Threading works automatically — replies stay in the thread they came from. Effective message limit is ~40k chars.
+
+### Email (IMAP/SMTP)
+
+Stdlib only — no extra deps. IMAP polling for inbound, SMTP for outbound. Great for long-form async work and webhook-driven inbound (Zapier/Make → email → bot).
+
+1. **Get IMAP + SMTP credentials.** For Gmail/Workspace or iCloud (with 2FA on, which is the default), you need an **App Password**, not your account password:
+   - Gmail: <https://myaccount.google.com/apppasswords> → create one for Mail; use the 16-character output.
+   - iCloud: <https://account.apple.com/account/manage> → Sign-In and Security → App-Specific Passwords.
+   - Other providers: usually IMAP 993 (SSL) + SMTP 587 (STARTTLS).
+2. **Configure**:
+   ```bash
+   EMAIL_IMAP_HOST=imap.gmail.com
+   EMAIL_IMAP_PORT=993
+   EMAIL_IMAP_USER=you@example.com
+   EMAIL_IMAP_PASS=app-password-here
+
+   EMAIL_SMTP_HOST=smtp.gmail.com
+   EMAIL_SMTP_PORT=587
+   EMAIL_SMTP_USER=you@example.com        # defaults to IMAP_USER if blank
+   EMAIL_SMTP_PASS=app-password-here      # defaults to IMAP_PASS if blank
+
+   EMAIL_FROM_ADDR=you@example.com
+   EMAIL_ALLOWED_SENDERS=trusted@example.com,boss@example.com
+   ```
+3. **Run** — `opengriffin run`. Email the bot from an allowed sender. Polling cadence is 60s (no IMAP IDLE in stdlib); threading is preserved via message-id chains.
+
+### iMessage (macOS only)
+
+Reads `~/Library/Messages/chat.db` directly; sends via AppleScript through Messages.app.
+
+1. **Grant Full Disk Access** to your terminal: System Settings → Privacy & Security → Full Disk Access → add Terminal.app / iTerm / whatever you launch the bot from. **Restart the terminal session** after granting.
+2. **Grant Automation access** to Messages.app: System Settings → Privacy & Security → Automation → your terminal → check Messages.
+3. **Identify the handles** you'll allow — open a Messages.app conversation; the handle in the address bar (e.g. `+15551234567` or `you@example.com`) is what you'll list.
+4. **Configure** (allowed handles are **required** — there is no open mode for iMessage):
+   ```bash
+   IMESSAGE_ALLOWED_HANDLES=+15551234567,boss@example.com
+   IMESSAGE_DB_PATH=                              # default ~/Library/Messages/chat.db
+   ```
+5. **Run** — `opengriffin run`. The gateway polls `chat.db` every 3 seconds; replies appear as if they came from your iMessage account.
+
+macOS only. Group chats are not yet supported.
+
+### Matrix
+
+Works with any Matrix homeserver — matrix.org (free public), self-hosted Synapse, Beeper, Element, etc. End-to-end encryption via Olm/Megolm is supported.
+
+1. **Create a bot account** — easiest is to register a fresh username at <https://element.io> (e.g. `mybot:matrix.org`). For self-hosted Synapse, use `register_new_matrix_user`.
+2. **(Optional) Get an access token** instead of storing the password — Element → Settings → Help & About → Advanced → Access Token. Saves you re-login.
+3. **Configure**:
+   ```bash
+   MATRIX_HOMESERVER=https://matrix.org
+   MATRIX_USER_ID=@mybot:matrix.org
+   MATRIX_PASSWORD=                               # OR set MATRIX_ACCESS_TOKEN
+   MATRIX_ACCESS_TOKEN=
+   MATRIX_ALLOWED_USERS=@you:matrix.org,@boss:matrix.org
+   ```
+4. **Install + run** — `pip install 'opengriffin[matrix]'` (the `[e2e]` extra is included; drop it for plaintext-only) then `opengriffin run`. Open a DM with your bot's Matrix handle.
+
+For E2E: the bot's device must be **verified** on first contact (click verify in Element), otherwise accept unverified sessions in your client settings. mautrix bridges to Telegram/Discord/Signal/WhatsApp work — the bot can sit in a bridged room.
+
+### Signal
+
+Hardest of the gateways — there's no public Signal API, so OpenGriffin wraps [`signal-cli`](https://github.com/AsamK/signal-cli) which reverse-engineers the protocol. JVM-based; needs Java 21+.
+
+1. **Install** — `brew install signal-cli` (macOS) or grab the release JAR from GitHub. Confirm Java 21+ with `java -version`.
+2. **Register a phone number** that **isn't already on Signal** (Signal only allows one device per number for primary registration):
+   ```bash
+   signal-cli -a +15551234567 register
+   signal-cli -a +15551234567 verify <code-from-sms>
+   ```
+   If you hit `Captcha required`, solve at <https://signalcaptchas.org/registration/generate.html> and pass `--captcha <url>`.
+3. **Test sending manually** to confirm signal-cli works end-to-end:
+   ```bash
+   echo "test" | signal-cli -a +15551234567 send +15555555555
+   ```
+4. **Configure**:
+   ```bash
+   SIGNAL_NUMBER=+15551234567                     # the bot's number
+   SIGNAL_ALLOWED_NUMBERS=+15555555555,+15556666666
+   ```
+5. **Run** — `opengriffin run`. First message after a quiet period can lag a few seconds (JVM cold start).
+
+If signal-cli pain outweighs the value, use **Matrix** with the Signal bridge instead.
+
+### After your bot is running
+
+Once any gateway is up:
+
+- Send `/start` (Telegram/Discord/Slack/Matrix) or any plain message (Email/iMessage/Signal) — you should get a typing indicator and a reply.
+- `/whoami` — confirms the gateway recognised your user id.
+- `/model openai gpt-4o-mini` — per-chat provider switch.
+- `/journal` — shows today's auto-journal entry.
+- `/usage` and `/insights` — token and cost breakdown across providers.
+
+Full command reference, voice support, group-chat behavior, and per-gateway troubleshooting live in **[docs/gateways/](docs/gateways/)** — one file per platform.
+
+---
+
 ## Provider matrix
 
 One env var (`OPENGRIFFIN_PROVIDER`) picks the backend. Full features (skills, MCP, hooks, sessions) on Claude; chat + function-calling fallbacks on every other provider.

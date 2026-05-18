@@ -14,6 +14,7 @@ cover the deeper topics.
 - [Cron + Triggers](cron.md) — scheduled work and ambient signal mesh
 - [Migration](migration.md) — importers for state from prior agent runtimes
 - [Configuration](configuration.md) — every env var and config file
+- [Site](site.md) — `apps/web` Next.js landing page (stack, dev, deploy)
 
 ## Quick links
 
