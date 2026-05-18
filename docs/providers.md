@@ -85,3 +85,15 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md#adding-a-new-provider). Minimum: copy `
 ## Cost notes
 
 OpenGriffin doesn't bill you. Your provider does. We log every run's cost to `usage.jsonl` so `/usage` and `/insights` can show you what each model costs in your real workload. Cheap providers don't lower quality automatically — verify by replaying past sessions through `/replay`.
+
+## Image generation
+
+The `image_generate` tool wraps [FAL.ai](https://fal.ai/) and is the only image provider currently shipped.
+
+- Env: `FAL_KEY` (set in `~/.opengriffin/.env`)
+- Default model: `fal-ai/flux/schnell` (fast, free-tier-friendly)
+- Override per call: pass a `model` arg with any FAL slug (e.g. `fal-ai/flux/dev`, `fal-ai/flux-pro/v1.1`)
+- Returns: a URL to the generated image
+- Source: `src/opengriffin/tools.py` — `_image_generate`
+
+Additional providers (Recraft V3, Ideogram, Stable Diffusion) and video providers (Kling, Hailuo, Wan, LTX) are tracked in [ROADMAP.md](../ROADMAP.md) under the Cloud spec — not yet implemented.

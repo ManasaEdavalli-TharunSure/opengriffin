@@ -23,6 +23,7 @@ function GriffinMark({ className }: { className?: string }) {
 const NAV_LINKS = [
   { href: "#features", label: "Features" },
   { href: "#install", label: "Install" },
+  { href: "#gateways", label: "Gateways" },
   { href: "#why", label: "Why" },
   { href: "#faq", label: "FAQ" },
   {
