@@ -2,12 +2,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <radialGradient id="bg" cx="0.5" cy="0.0" r="1.0">
-      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="0%" stop-color="#1f1003"/>
       <stop offset="60%" stop-color="#0a0a0a"/>
     </radialGradient>
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#a78bfa"/>
-      <stop offset="100%" stop-color="#7c3aed"/>
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f97316"/>
     </linearGradient>
     <filter id="glow">
       <feGaussianBlur stdDeviation="6" result="blur"/>
@@ -17,12 +17,12 @@
       </feMerge>
     </filter>
     <style>
-      .ti  { font: 700 78px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #ffffff; }
-      .sub { font: 400 32px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #cbd5e1; }
-      .meta { font: 600 22px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #a78bfa; letter-spacing: 0.12em; text-transform: uppercase; }
-      .tag { font: 500 18px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #94a3b8; }
-      .stat-num { font: 700 56px ui-sans-serif, system-ui, sans-serif; fill: url(#accent); }
-      .stat-lab { font: 500 18px ui-sans-serif, system-ui, sans-serif; fill: #94a3b8; letter-spacing: 0.06em; text-transform: uppercase; }
+      .ti  { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 78px; fill: #ffffff; }
+      .sub { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 400; font-size: 32px; fill: #cbd5e1; }
+      .meta { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 600; font-size: 22px; fill: #fbbf24; letter-spacing: 0.12em; text-transform: uppercase; }
+      .tag { font-family: "SF Mono", Menlo, monospace; font-weight: 500; font-size: 18px; fill: #94a3b8; }
+      .stat-num { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 56px; fill: url(#accent); }
+      .stat-lab { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 500; font-size: 18px; fill: #94a3b8; letter-spacing: 0.06em; text-transform: uppercase; }
     </style>
   </defs>
 
@@ -40,8 +40,8 @@
 
   <!-- title (two lines) -->
   <text class="ti" x="80" y="220">OpenGriffin</text>
-  <text class="ti" x="80" y="305" style="font-weight:600; fill:#a78bfa">Your agent that gets</text>
-  <text class="ti" x="80" y="380" style="font-weight:600; fill:#a78bfa">smarter while you sleep.</text>
+  <text class="ti" x="80" y="305" style="font-weight:600; fill:#fbbf24">Your agent that gets</text>
+  <text class="ti" x="80" y="380" style="font-weight:600; fill:#fbbf24">smarter while you sleep.</text>
 
   <!-- subtitle -->
   <text class="sub" x="80" y="440">A self-evolving personal AI agent. Lives in your Telegram.</text>
