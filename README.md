@@ -1,20 +1,48 @@
 # OpenGriffin
 
-> A self-evolving personal agent that lives in your Telegram. Bring your own model, your own skills, your own memory.
+> The Claude-native personal agent that **learns while you sleep** — and lives in your Telegram.
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![CI](https://github.com/ManasaEdavalli-TharunSure/opengriffin/actions/workflows/ci.yml/badge.svg)](https://github.com/ManasaEdavalli-TharunSure/opengriffin/actions/workflows/ci.yml)
 [![Telegram](https://img.shields.io/badge/Telegram-bot-26A5E4.svg?logo=telegram&logoColor=white)](https://core.telegram.org/bots)
 
-OpenGriffin is a long-running agent process that talks to you on Telegram, keeps a journal, schedules its own work, learns new skills on the fly, and remembers what matters across sessions. It is built on the [Claude Agent SDK](https://github.com/anthropics/claude-agent-sdk-python) and degrades gracefully to OpenAI, OpenRouter, Azure, Gemini, Mistral, Groq, Bedrock, local Ollama, and 13 more backends — bring whatever key you have.
+**You wake up. Overnight, your agent has read yesterday back to itself, written down what it learned about you, caught its own failures, and proposed new skills — in a journal you can read over coffee.** That nightly self-improvement loop, built *natively* on the [Claude Agent SDK](https://github.com/anthropics/claude-agent-sdk-python) — real skills, MCP, hooks, resumable sessions, not a reimplementation — is what OpenGriffin is. It lives in your Telegram, runs entirely on your own machine, and works with any of 21 model providers on your own key.
+
+<p align="center">
+  <img src="assets/journal-card.png" alt="A nightly journal card OpenGriffin wrote about its own day" width="430">
+</p>
+<p align="center"><sub>Run <code>griffin card</code> to turn any night's journal entry into a card like this — your shareable “here's what my agent did overnight.”</sub></p>
+
+---
+
+## How it's different
+
+The personal-agent space is crowded — Nous Research's **Hermes Agent**, **OpenClaw**, and **QwenPaw** all do self-evolving, multi-messenger, BYO-key, and local-first. OpenGriffin doesn't claim to out-feature them. Two things are genuinely ours:
+
+1. **It's the Claude-native one.** OpenGriffin runs *on the Claude Agent SDK itself* — your skills are real Claude Code skills under `~/.claude/skills/` (shared with Claude Code), MCP servers, hooks, and resumable sessions all work as-is. The others reimplement an agent loop; OpenGriffin *is* the Claude loop, wearing a Telegram face.
+2. **The journal is a readable, shareable artifact.** The nightly loop doesn't just mutate hidden state — it writes you a page you can read, and `griffin card` makes it shareable. "Learns while you sleep" you can actually *see*.
+
+| | OpenGriffin | Hermes (Nous) | OpenClaw | QwenPaw |
+|---|:---:|:---:|:---:|:---:|
+| Built **on** the Claude Agent SDK (native skills / MCP / hooks / sessions) | ✅ | ❌ own runtime | ❌ own runtime | ❌ Qwen / AgentScope |
+| Readable nightly journal you can screenshot & share | ✅ `griffin card` | ❌ | ❌ | ❌ |
+| Telegram-native onboarding (one messenger, ~2 min) | ✅ | one of many | one of many | one of many |
+| Self-evolving skills | ✅ | ✅ | ◑ | ✅ |
+| Multi-messenger gateways | ✅ 7 | ✅ 10+ | ✅ 50+ | ✅ |
+| BYO-key / multi-provider | ✅ 21 | ✅ 200+ | ✅ | ✅ |
+| Local-first / no backend | ✅ | ✅ | ✅ | ✅ |
+| Acts proactively (cron / triggers) | ✅ | ✅ | ✅ heartbeat | ✅ |
+| License | Apache-2.0 | MIT | MIT | OSS |
+
+<sub>Comparison reflects publicly documented features as of mid-2026. Hermes, OpenClaw, and QwenPaw are excellent projects with far larger communities — this table is about *fit*, not size.</sub>
 
 ---
 
 ## Why OpenGriffin
 
 - **Self-evolving skill graph.** The agent authors, edits, and retires its own skills at runtime. No redeploy. New capabilities ship inside a conversation.
-- **Daily journal at 4:30 AM.** Every conversation, decision, and tool call is appended to a structured journal. A nightly self-improvement loop reads yesterday's entries, summarizes them, and proposes new skills.
+- **Daily journal at 4:30 AM.** Every conversation, decision, and tool call is appended to a structured journal. A nightly self-improvement loop reads yesterday's entries, summarizes them, and proposes new skills — then `griffin card` renders the entry into a shareable image.
 - **21 AI providers, BYO key.** Claude Max OAuth, Anthropic, OpenAI, OpenRouter, Azure, Gemini, Mistral, Cohere, Groq, Together, Fireworks, DeepSeek, HuggingFace, Perplexity, xAI, Bedrock, Cerebras, NVIDIA NIM, Lambda Labs, Novita, Ollama. Switch with one env var.
 - **Persistent memory: MEMORY / USER / SOUL.** Three flat markdown files load fresh into every session. `MEMORY.md` is the environment, `USER.md` is the profile, `SOUL.md` is the voice.
 - **Multi-surface.** Telegram is the front door, but the same brain answers via CLI, webhooks, and voice notes.
@@ -97,6 +125,9 @@ opengriffin doctor
 
 # Run the nightly self-improvement loop manually
 opengriffin improve
+
+# Turn last night's journal entry into a shareable card (SVG, + PNG with --png)
+opengriffin card --png
 
 # Migrate state from a prior agent runtime (see docs/migration.md)
 opengriffin migrate from-hermes
@@ -276,7 +307,7 @@ Once any gateway is up:
 - Send `/start` (Telegram/Discord/Slack/Matrix) or any plain message (Email/iMessage/Signal) — you should get a typing indicator and a reply.
 - `/whoami` — confirms the gateway recognised your user id.
 - `/model openai gpt-4o-mini` — per-chat provider switch.
-- `/journal` — shows today's auto-journal entry.
+- `/journal` — shows today's auto-journal entry. (`griffin card` renders it into a shareable image.)
 - `/usage` and `/insights` — token and cost breakdown across providers.
 
 Full command reference, voice support, group-chat behavior, and per-gateway troubleshooting live in **[docs/gateways/](docs/gateways/)** — one file per platform.
