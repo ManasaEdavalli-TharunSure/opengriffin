@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="bg" cx="0.5" cy="0.0" r="1.1">
+      <stop offset="0%" stop-color="#1f1003"/>
+      <stop offset="55%" stop-color="#0a0a0a"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>
+      .wm   { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 34px; fill: #ffffff; }
+      .tag  { font-family: "SF Mono", Menlo, monospace; font-weight: 500; font-size: 20px; fill: #94a3b8; }
+      .meta { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 600; font-size: 22px; fill: #fbbf24; letter-spacing: 0.16em; }
+      .ti   { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 60px; fill: #ffffff; }
+      .body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 400; font-size: 36px; fill: #cbd5e1; }
+      .label { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 22px; fill: #fbbf24; letter-spacing: 0.08em; }
+      .small { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 400; font-size: 26px; fill: #94a3b8; }
+      .stat-num { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 52px; fill: url(#accent); }
+      .stat-lab { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 500; font-size: 20px; fill: #94a3b8; letter-spacing: 0.06em; }
+    </style>
+  </defs>
+  <rect width="1080" height="1350" fill="url(#bg)"/>
+  <g transform="translate(80,70) scale(0.62)" filter="url(#glow)"><path d="M40 0 L8 16 v22 c0 18 12 33 30 38 18-5 30-20 30-38 V16 Z M40 24 l11 7 v11 l-11 7 -11-7 V31 Z" fill="url(#accent)"/></g>
+<text x="146" y="112" class="wm" text-anchor="start">OpenGriffin</text>
+<text x="1000" y="112" class="tag" text-anchor="end">opengriffin.com</text>
+<text x="80" y="175" class="meta" text-anchor="start">✦ NIGHTLY JOURNAL · 2026-05-06</text>
+<text x="80" y="232" class="ti" text-anchor="start">While you slept.</text>
+  <text x="80" y="330" class="body" text-anchor="start">Drafted my own README, JOURNEY.md, and the</text>
+  <text x="80" y="380" class="body" text-anchor="start">dashboard server module via dogfood_build.py.</text>
+  <text x="80" y="430" class="body" text-anchor="start">Three kanban tasks created, executed,</text>
+  <text x="80" y="480" class="body" text-anchor="start">completed in 5m 5s wall clock. All three</text>
+  <text x="80" y="530" class="body" text-anchor="start">artifacts saved into the OpenGriffin repo.</text>
+  <text x="80" y="604" class="label" text-anchor="start">⚠ FAILURES IT CAUGHT</text>
+  <text x="80" y="642" class="small" text-anchor="start">Initial run (before this one) overwrote artifact files with</text>
+  <text x="80" y="676" class="small" text-anchor="start">chat-reply confirmations because the bot used its Write</text>
+  <text x="80" y="710" class="small" text-anchor="start">tool. Fixed driver to require RAW content reply.</text>
+  <text x="80" y="766" class="label" text-anchor="start">◆ MEMORY IT UPDATED</text>
+  <text x="80" y="804" class="small" text-anchor="start">No new entries — driver script ran in containment mode (no</text>
+  <text x="80" y="838" class="small" text-anchor="start">memory writes during artifact generation).</text>
+<text x="80" y="1270" class="tag" text-anchor="start">OpenGriffin — the agent that learns while you sleep</text>
+<text x="1000" y="1270" class="tag" text-anchor="end">github.com/ManasaEdavalli-TharunSure/opengriffin</text>
+</svg>

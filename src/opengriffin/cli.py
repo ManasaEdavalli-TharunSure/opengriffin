@@ -115,6 +115,29 @@ def improve() -> None:
     rprint("[green]done — see /journal[/green]")
 
 
+@app.command()
+def card(
+    date: str = typer.Option(None, "--date", "-d", help="Entry date YYYY-MM-DD (default: latest)"),
+    output: str = typer.Option(None, "--output", "-o", help="Output path (default: memories dir)"),
+    png: bool = typer.Option(False, "--png", help="Also rasterise to PNG (sips/rsvg/cairosvg)"),
+) -> None:
+    """Render a nightly journal entry into a shareable card (SVG, optionally PNG)."""
+    from . import journal_card
+
+    try:
+        res = journal_card.make_card(date=date, output=output, png=png)
+    except ValueError as e:
+        rprint(f"[red]{e}[/red]")
+        raise typer.Exit(1) from e
+    rprint(f"[green]card written[/green] for {res['date']}")
+    rprint(f"  SVG: {res['svg']}")
+    if res["png"]:
+        rprint(f"  PNG: {res['png']}")
+    elif png:
+        rprint("  [yellow]PNG skipped — no rasteriser found (install librsvg/cairosvg).[/yellow]")
+    rprint("\nOpen it, screenshot it, post it. [dim]This is your launch artifact.[/dim]")
+
+
 def main():
     app()
 
