@@ -5,6 +5,8 @@
 set -euo pipefail
 
 INSTALL_DIR="${OPENGRIFFIN_HOME:-$HOME/opengriffin}"
+REPO_URL="${OPENGRIFFIN_REPO_URL:-https://github.com/ManasaEdavalli-TharunSure/opengriffin.git}"
+REPO_REF="${OPENGRIFFIN_REF:-}"
 PY_MIN_MAJOR=3
 PY_MIN_MINOR=11
 
@@ -56,11 +58,19 @@ fi
 
 # 3. Clone or update.
 if [ -d "$INSTALL_DIR/.git" ]; then
-    echo "ℹ  $INSTALL_DIR exists; pulling latest"
-    git -C "$INSTALL_DIR" pull --ff-only
+    echo "ℹ  $INSTALL_DIR exists; updating"
+    if [ -n "$REPO_REF" ]; then
+        git -C "$INSTALL_DIR" fetch --all --tags
+        git -C "$INSTALL_DIR" checkout --detach "$REPO_REF"
+    else
+        git -C "$INSTALL_DIR" pull --ff-only
+    fi
 else
     echo "→ Cloning into $INSTALL_DIR"
-    git clone https://github.com/ManasaEdavalli-TharunSure/opengriffin.git "$INSTALL_DIR"
+    git clone "$REPO_URL" "$INSTALL_DIR"
+    if [ -n "$REPO_REF" ]; then
+        git -C "$INSTALL_DIR" checkout --detach "$REPO_REF"
+    fi
 fi
 
 # 4. Install.
