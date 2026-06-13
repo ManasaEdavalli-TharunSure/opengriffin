@@ -13,6 +13,7 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 function GriffinMark({ className }: { className?: string }) {
   return (
@@ -73,7 +74,7 @@ function GithubButton({
       rel="noreferrer"
       onClick={onClick}
       className={
-        "flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-sm font-medium text-black transition-all hover:scale-[1.03] hover:bg-zinc-200 active:scale-[0.98] " +
+        "flex items-center gap-1.5 rounded-md bg-[var(--color-text)] px-3 py-1.5 text-sm font-medium text-[var(--color-bg-canvas)] transition-all hover:scale-[1.03] hover:opacity-90 active:scale-[0.98] " +
         (className ?? "")
       }
     >
@@ -102,7 +103,8 @@ export function Nav() {
         <NavBody>
           <Brand />
           <NavItems items={NAV_LINKS} />
-          <div className="relative z-20 flex items-center">
+          <div className="relative z-20 flex items-center gap-2">
+            <ThemeToggle />
             <GithubButton />
           </div>
         </NavBody>
@@ -111,7 +113,10 @@ export function Nav() {
         <MobileNav>
           <MobileNavHeader>
             <Brand />
-            <MobileNavToggle isOpen={open} onClick={() => setOpen((v) => !v)} />
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <MobileNavToggle isOpen={open} onClick={() => setOpen((v) => !v)} />
+            </div>
           </MobileNavHeader>
           <MobileNavMenu isOpen={open}>
             {NAV_LINKS.map((link, i) => (

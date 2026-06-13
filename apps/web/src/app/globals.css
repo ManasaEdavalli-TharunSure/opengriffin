@@ -4,10 +4,65 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* OpenGriffin palette — dark OLED base + modern orange brand + warm yellow
-     "alive" accent. Tuned for WCAG AA on #0a0a0a:
-       - orange-500 (#f97316) gives ~4.8:1 against pure black at 16px+
-       - amber-400 (#fbbf24) gives ~9.5:1 — safe for body-size text + glyphs */
+  /* ── LIGHT theme (default) ────────────────────────────────────────────
+     Warm off-white canvas + orange brand. Orange is darkened to orange-600
+     (#ea580c, ~4.5:1 on the off-white) so brand-colored text/glyphs hit AA;
+     large fills still read as vivid orange. */
+  color-scheme: light;
+
+  --color-bg-canvas: #faf9f7;
+  --color-bg-elev: #ffffff;
+  --color-surface: rgba(28, 25, 23, 0.035);
+  --color-surface-hover: rgba(28, 25, 23, 0.06);
+  --color-border-soft: rgba(28, 25, 23, 0.1);
+  --color-border-hover: rgba(234, 88, 12, 0.45);
+
+  --color-text: #1c1917;
+  --color-text-dim: #57534e;
+  --color-text-faint: #a8a29e;
+
+  --color-brand: #ea580c;        /* orange-600 — AA on the off-white canvas */
+  --color-brand-soft: #c2410c;
+  --color-brand-glow: rgba(234, 88, 12, 0.28);
+
+  --color-alive: #d97706;        /* amber-600 — "running / online" accent */
+  --color-alive-soft: #b45309;
+  --color-alive-glow: rgba(217, 119, 6, 0.22);
+
+  --color-warn: #d97706;
+  --color-danger: #dc2626;
+
+  /* Dot-grid texture color (hero background) — theme-aware. */
+  --color-dot: rgba(28, 25, 23, 0.16);
+
+  /* shadcn-style tokens */
+  --radius: 0.75rem;
+  --background: #faf9f7;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #ea580c;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f4;
+  --secondary-foreground: #1c1917;
+  --muted: #f5f5f4;
+  --muted-foreground: #57534e;
+  --accent: #fff1e7;             /* warm orange-tinted light surface */
+  --accent-foreground: #9a3412;
+  --destructive: #dc2626;
+  --border: rgba(28, 25, 23, 0.1);
+  --input: rgba(28, 25, 23, 0.14);
+  --ring: #ea580c;
+}
+
+.dark {
+  /* ── DARK theme ───────────────────────────────────────────────────────
+     The original OpenGriffin palette: dark OLED base + orange brand + warm
+     amber "alive" accent. Tuned for WCAG AA on #0a0a0a. */
+  color-scheme: dark;
+
   --color-bg-canvas: #0a0a0a;
   --color-bg-elev: #111118;
   --color-surface: rgba(255, 255, 255, 0.03);
@@ -30,9 +85,8 @@
   --color-warn: #f59e0b;
   --color-danger: #ef4444;
 
-  /* shadcn-style tokens — tuned to OpenGriffin's dark palette so the
-     shadcn primitives (Button / Card / Badge) just work without re-skinning. */
-  --radius: 0.75rem;
+  --color-dot: rgba(255, 255, 255, 0.5);
+
   --background: #0a0a0a;
   --foreground: #f8fafc;
   --card: #111118;
@@ -89,6 +143,7 @@
   --color-alive: var(--color-alive);
   --color-alive-soft: var(--color-alive-soft);
   --color-alive-glow: var(--color-alive-glow);
+  --color-dot: var(--color-dot);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

@@ -81,7 +81,7 @@ export function Hero() {
         className="absolute inset-0 pointer-events-none opacity-[0.25]"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
+            "radial-gradient(circle, var(--color-dot) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
           maskImage:
             "radial-gradient(ellipse 70% 50% at 50% 30%, #000 50%, transparent 100%)",
