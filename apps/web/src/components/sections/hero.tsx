@@ -7,10 +7,11 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { Copy, Check, Sparkles } from "lucide-react";
+import { Copy, Check, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Glow } from "@/components/ui/glow";
 import { GitHubIcon } from "@/components/icons/github";
 
 const INSTALL_CMD =
@@ -129,32 +130,44 @@ export function Hero() {
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
 
+      {/* 21st.dev Glow — twin radial blooms themed to the OpenGriffin palette */}
+      <Glow variant="top" className="opacity-70" />
+
       <motion.div
         className="relative z-10 max-w-4xl mx-auto text-center"
         variants={container}
         initial="hidden"
         animate="visible"
       >
-        {/* Status pill — pulsing amber dot */}
+        {/* Status pill — 21st.dev badge-with-action: pulsing amber dot +
+            arrow that slides on hover, links through to the repo. */}
         <motion.div variants={item} className="flex justify-center mb-6">
           <Badge
+            asChild
             variant="outline"
-            className="px-4 py-1.5 bg-[var(--color-bg-elev)]/70 backdrop-blur-md border-[var(--color-border-soft)] flex items-center gap-2"
+            className="group px-4 py-1.5 bg-[var(--color-bg-elev)]/70 backdrop-blur-md border-[var(--color-border-soft)] flex items-center gap-2 transition-colors hover:border-[var(--color-border-hover)]"
           >
-            <span className="relative flex h-2 w-2">
-              <span
-                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                style={{ backgroundColor: "var(--color-alive)" }}
-              />
-              <span
-                className="relative inline-flex rounded-full h-2 w-2"
-                style={{ backgroundColor: "var(--color-alive)" }}
-              />
-            </span>
-            <Sparkles className="w-3 h-3" style={{ color: "var(--color-alive-soft)" }} />
-            <span className="text-xs font-medium tracking-wide text-[var(--color-text)]">
-              OSS · Apache 2.0 · self-evolving
-            </span>
+            <a
+              href="https://github.com/ManasaEdavalli-TharunSure/opengriffin"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="relative flex h-2 w-2">
+                <span
+                  className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                  style={{ backgroundColor: "var(--color-alive)" }}
+                />
+                <span
+                  className="relative inline-flex rounded-full h-2 w-2"
+                  style={{ backgroundColor: "var(--color-alive)" }}
+                />
+              </span>
+              <Sparkles className="w-3 h-3" style={{ color: "var(--color-alive-soft)" }} />
+              <span className="text-xs font-medium tracking-wide text-[var(--color-text)]">
+                OSS · Apache 2.0 · self-evolving
+              </span>
+              <ArrowRight className="w-3 h-3 text-[var(--color-text-dim)] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[var(--color-brand-soft)]" />
+            </a>
           </Badge>
         </motion.div>
 
