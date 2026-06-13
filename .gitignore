@@ -57,6 +57,9 @@ bot.err.log
 # Local CLAUDE Code session storage (only if it accidentally lands here)
 .claude/projects/
 
+# MCP config — contains plaintext 21st.dev API key, keep local only
+.mcp.json
+
 # Build output
 node_modules/
 *.tsbuildinfo

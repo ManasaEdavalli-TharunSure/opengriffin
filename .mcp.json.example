@@ -1,0 +1,13 @@
+{
+  "//": "Project-scoped MCP servers for Claude Code. Copy this file to .mcp.json (git-ignored) and fill in your own keys.",
+  "mcpServers": {
+    "21st-dev-magic": {
+      "//": "21st.dev Magic — 100+ production-ready React components. Get a free API key at https://21st.dev/magic/console",
+      "command": "npx",
+      "args": ["-y", "@21st-dev/magic@latest"],
+      "env": {
+        "API_KEY": ""
+      }
+    }
+  }
+}
