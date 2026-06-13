@@ -30,9 +30,20 @@ function FeatureCard({
 }) {
   const reduce = useReducedMotion();
   const accentColor = CATEGORY_COLORS[category] ?? "var(--color-brand-soft)";
+
+  // Cursor-follow spotlight: track the pointer as CSS vars the .og-spotlight
+  // ::before reads. Skipped under reduced motion.
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduce) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
+  };
+
   return (
     <motion.div
-      className="og-card rounded-xl p-5 relative overflow-hidden group cursor-default"
+      onMouseMove={handleMove}
+      className="og-card og-spotlight rounded-xl p-5 relative overflow-hidden group cursor-default"
       whileHover={reduce ? undefined : { y: -4, scale: 1.01 }}
       transition={{ type: "spring", stiffness: 320, damping: 22 }}
       variants={{
@@ -49,14 +60,6 @@ function FeatureCard({
         },
       }}
     >
-      {/* Gradient sweep — radial glow that appears in the top-left on hover */}
-      <span
-        aria-hidden
-        className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse 80% 60% at 0% 0%, ${accentColor}22 0%, transparent 60%)`,
-        }}
-      />
       {/* Top accent bar — subtle stripe in the category color */}
       <span
         aria-hidden

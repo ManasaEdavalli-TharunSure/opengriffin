@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Glow } from "@/components/ui/glow";
+import { Magnetic } from "@/components/motion/magnetic";
 import { GitHubIcon } from "@/components/icons/github";
 
 const INSTALL_CMD =
@@ -171,25 +172,15 @@ export function Hero() {
           </Badge>
         </motion.div>
 
-        {/* Headline */}
+        {/* Headline — fluid clamp() type scales continuously across viewports */}
         <motion.h1
           variants={item}
-          className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-6"
+          className="text-[clamp(2.75rem,7vw,5rem)] font-bold tracking-tight leading-[1.05] mb-6 text-balance"
         >
           <span className="block text-[var(--color-text)]">
             The personal AI agent
           </span>
-          <span
-            className="block mt-2"
-            style={{
-              background:
-                "linear-gradient(110deg, var(--color-brand-soft) 0%, var(--color-brand) 35%, var(--color-alive) 75%, var(--color-alive-soft) 100%)",
-              backgroundSize: "200% 100%",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
+          <span className="block mt-2 text-gradient-flow">
             that compounds while you sleep.
           </span>
         </motion.h1>
@@ -197,7 +188,7 @@ export function Hero() {
         {/* Subhead */}
         <motion.p
           variants={item}
-          className="text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-[clamp(1rem,1.4vw+0.6rem,1.2rem)] max-w-2xl mx-auto mb-10 leading-relaxed text-pretty"
           style={{ color: "var(--color-text-dim)" }}
         >
           Persistent memory across sessions. A daily journal at 4:30am. 21 AI
@@ -209,6 +200,7 @@ export function Hero() {
           variants={item}
           className="flex flex-col sm:flex-row gap-3 justify-center mb-12"
         >
+          <Magnetic>
           <motion.div
             whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -239,6 +231,8 @@ export function Hero() {
               </a>
             </Button>
           </motion.div>
+          </Magnetic>
+          <Magnetic>
           <motion.div
             whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -260,6 +254,7 @@ export function Hero() {
               </a>
             </Button>
           </motion.div>
+          </Magnetic>
         </motion.div>
 
         {/* Install command card */}
