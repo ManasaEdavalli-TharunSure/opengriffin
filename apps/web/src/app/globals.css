@@ -180,6 +180,53 @@ body {
   animation: og-sheen 0.9s ease-out;
 }
 
+/* Flowing gradient text — the brand gradient drifts horizontally so the
+   headline feels alive. Pair with a wide background-size and bg-clip:text.
+   Frozen under prefers-reduced-motion (see block below). */
+@keyframes og-gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+.text-gradient-flow {
+  background-image: linear-gradient(
+    110deg,
+    var(--color-brand-soft) 0%,
+    var(--color-brand) 25%,
+    var(--color-alive) 50%,
+    var(--color-brand-soft) 75%,
+    var(--color-alive-soft) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: og-gradient-flow 8s linear infinite;
+}
+
+/* Cursor-follow spotlight — cards expose --mx/--my (px, set on pointermove)
+   and bloom a soft brand glow under the cursor. */
+.og-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in oklab, var(--color-brand) 18%, transparent),
+    transparent 60%
+  );
+}
+.og-spotlight:hover::before {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
