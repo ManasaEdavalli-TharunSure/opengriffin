@@ -45,7 +45,11 @@ export function Navbar({ children, className }: NavbarProps) {
       className={cn("fixed inset-x-0 top-0 z-50 w-full", className)}
     >
       {React.Children.map(children, (child) =>
-        React.isValidElement(child)
+        // Only inject `visible` into the layout children that consume it
+        // (NavBody / MobileNav) — other children (e.g. the scroll-progress
+        // bar) are DOM elements and would reject an unknown `visible` attr.
+        React.isValidElement(child) &&
+        (child.type === NavBody || child.type === MobileNav)
           ? React.cloneElement(
               child as React.ReactElement<{ visible?: boolean }>,
               { visible },
