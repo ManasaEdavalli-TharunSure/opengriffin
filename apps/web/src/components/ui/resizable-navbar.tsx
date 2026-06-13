@@ -260,7 +260,7 @@ export function MobileNavMenu({
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
-            "absolute inset-x-2 top-16 z-50 flex w-[calc(100%-1rem)] flex-col items-start gap-1 rounded-xl border border-[var(--color-border-soft)] bg-[rgba(10,10,10,0.97)] p-4 shadow-2xl backdrop-blur-md",
+            "absolute inset-x-2 top-16 z-50 flex w-[calc(100%-1rem)] flex-col items-start gap-1 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-bg-elev)]/95 p-4 shadow-2xl backdrop-blur-md",
             className,
           )}
         >

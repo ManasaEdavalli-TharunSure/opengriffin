@@ -29,6 +29,10 @@ export const metadata: Metadata = {
   },
 };
 
+// Runs before first paint to set the theme class — avoids a flash of the
+// wrong theme. Defaults to light; honors a saved choice, else the OS setting.
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -38,7 +42,11 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
