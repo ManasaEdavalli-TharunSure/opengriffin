@@ -127,7 +127,7 @@ classifier.)
 ### Need to build for Cloud ❌
 
 #### Hosted infrastructure
-- [ ] Multi-tenant SaaS backend (Supabase + Postgres OR Cloudflare D1)
+- [ ] Multi-tenant SaaS backend (managed Postgres OR Cloudflare D1)
 - [ ] User account system (signup, login, password reset, OAuth via Google/GitHub)
 - [ ] Per-user encrypted secret store (AES-256 at rest)
 - [ ] Stripe billing integration with word-based metering
@@ -267,7 +267,7 @@ genuinely impractical to self-host at single-user scale.
    Use whitespace tokenization on input + output, or compute via a
    reference tokenizer per model and convert?
 4. Privacy: encrypt customer data with their own key (BYOK encryption)
-   or platform-managed? The original site claimed AES-256 + Supabase —
+   or platform-managed? The original site claimed AES-256 at rest —
    that's platform-managed. Decide.
 5. OSS stays Apache-2.0. Cloud product code stays proprietary. Cloud
    could be a thin wrapper over the OSS Core; the Core is the substrate.
