@@ -60,6 +60,10 @@ def test_install_script_smokes_on_linux_distros(distro: str, image: str) -> None
         bash /workspace/scripts/install.sh
         test -x "$OPENGRIFFIN_HOME/.venv/bin/opengriffin"
         test -f "$OPENGRIFFIN_HOME/.env"
+        test -f "$OPENGRIFFIN_HOME/opengriffin.service"
+        test -f "$OPENGRIFFIN_HOME/opengriffin.plist"
+        grep -q "ExecStart=$OPENGRIFFIN_HOME/.venv/bin/opengriffin run" "$OPENGRIFFIN_HOME/opengriffin.service"
+        ! grep -q "@INSTALL_DIR@" "$OPENGRIFFIN_HOME/opengriffin.service"
     """
 
     result = subprocess.run(

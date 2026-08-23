@@ -103,12 +103,21 @@ for d in "$INSTALL_DIR/bundled_skills"/*/; do
 done
 echo "✓ Skills bundled into ~/.claude/skills/  (added $copied new)"
 
-# 7. Verify install.
+# 7. Render service files with the real install path (templates keep
+#    @INSTALL_DIR@ placeholders so the repo copy works for any location).
+for unit in opengriffin.service opengriffin.plist; do
+    if [ -f "$INSTALL_DIR/scripts/$unit" ]; then
+        sed "s|@INSTALL_DIR@|$INSTALL_DIR|g" "$INSTALL_DIR/scripts/$unit" > "$INSTALL_DIR/$unit"
+    fi
+done
+echo "✓ Rendered service files: $INSTALL_DIR/opengriffin.service, $INSTALL_DIR/opengriffin.plist"
+
+# 8. Verify install.
 echo
 echo "→ Running doctor…"
 "$INSTALL_DIR/.venv/bin/opengriffin" doctor || true
 
-# 8. Next steps.
+# 9. Next steps.
 cat <<EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -135,9 +144,19 @@ Next:
        cd $INSTALL_DIR && .venv/bin/opengriffin run
        # or  .venv/bin/opengriffin doctor   to check the setup
 
-  5. Optional — start at boot:
-       Linux: sudo cp scripts/opengriffin.service /etc/systemd/system/
-       macOS: cp scripts/opengriffin.plist ~/Library/LaunchAgents/
+  5. Optional — start at boot + easy restarts (runs as YOUR user so
+     Claude Max OAuth in ~/.claude/ keeps working):
+       Linux:
+         mkdir -p ~/.config/systemd/user
+         cp $INSTALL_DIR/opengriffin.service ~/.config/systemd/user/
+         systemctl --user daemon-reload
+         systemctl --user enable --now opengriffin
+         loginctl enable-linger \$USER
+         # restart later:  systemctl --user restart opengriffin
+       macOS:
+         cp $INSTALL_DIR/opengriffin.plist ~/Library/LaunchAgents/com.opengriffin.agent.plist
+         launchctl load ~/Library/LaunchAgents/com.opengriffin.agent.plist
+         # restart later:  launchctl kickstart -k gui/\$(id -u)/com.opengriffin.agent
 
 Docs:  https://opengriffin.com/docs
 Repo:  https://github.com/ManasaEdavalli-TharunSure/opengriffin

@@ -1,0 +1,31 @@
+# OpenGriffin systemd USER service template.
+#
+# The installer renders this into <install dir>/opengriffin.service with
+# @INSTALL_DIR@ replaced by your actual install path. Install it as a *user*
+# service — NOT a system one — so the bot runs as the same user who logged
+# into the Claude CLI and can read ~/.claude/.credentials.json (Claude Max
+# OAuth) and ~/.opengriffin/:
+#
+#   mkdir -p ~/.config/systemd/user
+#   cp opengriffin.service ~/.config/systemd/user/
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now opengriffin
+#   loginctl enable-linger "$USER"     # keep it running after logout/reboot
+#
+# Restart:  systemctl --user restart opengriffin
+# Logs:     journalctl --user -u opengriffin -f
+
+[Unit]
+Description=OpenGriffin personal agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=@INSTALL_DIR@
+ExecStart=@INSTALL_DIR@/.venv/bin/opengriffin run
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  OpenGriffin launchd agent template.
+
+  The installer renders this into <install dir>/opengriffin.plist with
+  @INSTALL_DIR@ replaced by your actual install path. Install it as a
+  per-user LaunchAgent (runs as you, so Claude Max OAuth in ~/.claude/
+  keeps working):
+
+    cp opengriffin.plist ~/Library/LaunchAgents/com.opengriffin.agent.plist
+    launchctl load ~/Library/LaunchAgents/com.opengriffin.agent.plist
+
+  Restart:  launchctl kickstart -k gui/$(id -u)/com.opengriffin.agent
+  Logs:     tail -f @INSTALL_DIR@/opengriffin.log
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.opengriffin.agent</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>@INSTALL_DIR@/.venv/bin/opengriffin</string>
+    <string>run</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>@INSTALL_DIR@</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <dict>
+    <key>SuccessfulExit</key>
+    <false/>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>@INSTALL_DIR@/opengriffin.log</string>
+  <key>StandardErrorPath</key>
+  <string>@INSTALL_DIR@/opengriffin.log</string>
+</dict>
+</plist>

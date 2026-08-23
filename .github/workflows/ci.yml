@@ -47,6 +47,11 @@ jobs:
           bash scripts/install.sh
           test -x "$OPENGRIFFIN_HOME/.venv/bin/opengriffin"
           test -f "$OPENGRIFFIN_HOME/.env"
+          test -f "$OPENGRIFFIN_HOME/opengriffin.service"
+          test -f "$OPENGRIFFIN_HOME/opengriffin.plist"
+          grep -q "<string>$OPENGRIFFIN_HOME/.venv/bin/opengriffin</string>" "$OPENGRIFFIN_HOME/opengriffin.plist"
+          ! grep -q "@INSTALL_DIR@" "$OPENGRIFFIN_HOME/opengriffin.plist"
+          plutil -lint "$OPENGRIFFIN_HOME/opengriffin.plist"
 
   web:
     runs-on: ubuntu-latest
